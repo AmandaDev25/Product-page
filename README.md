@@ -38,6 +38,8 @@ Este projeto é uma página web desenvolvida como parte de um teste técnico par
 
 ## Deploy
 
+https://enchanting-semifreddo-73a90f.netlify.app/
+
 O projeto pode ser publicado no **GitHub Pages**, **Vercel** ou **Netlify**. Para o GitHub Pages:
 ```sh
 git add .
@@ -88,6 +90,8 @@ This project is a web page developed as part of a front-end technical test. The 
 - Add transition effects to the carousel.  
 
 ## **Deployment**  
+
+https://enchanting-semifreddo-73a90f.netlify.app/
 
 The project can be published on **GitHub Pages**, **Vercel**, or **Netlify**. For GitHub Pages:  
 ```sh
