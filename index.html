@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste Técnico - Front-End</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+  <!-- Sticky Header -->
+  <header class="sticky-header">
+    <h1>Produto X</h1>
+  </header>
+
+  <main>
+    <section id="lead-form">
+      <h2>Cadastre-se para saber mais!</h2>
+      <form id="form">
+        <input type="text" id="name" style="margin: 0.5rem;" placeholder="Nome" required>
+        <input type="email" id="email" style="margin: 0.5rem;" placeholder="E-mail" required>
+        <input type="text" id="phone" style="margin: 0.5rem;" placeholder="Telefone" required>
+        <div style="display: flex; justify-content: center;">
+          <button type="submit" style="margin: 1rem;">Enviar</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="product-page" class="hidden">
+      <h2 style="display: flex; justify-content: center;">Bem-vindo, <span id="user-name"></span>!</h2>
+      <script>
+        document.getElementById('form').addEventListener('submit', function (event) {
+          event.preventDefault();
+          let name = document.getElementById('name').value;
+          let email = document.getElementById('email').value;
+          let phone = document.getElementById('phone').value;
+          
+          // insira o email conforme o exemplo
+          if (!validateEmail(email)) {
+            alert('Por favor, insira um e-mail válido. ex: a@a.com');
+            return;
+          }
+          // insira o número de telefone conforme o exemplo dado
+          if (!validatePhone(phone)) {
+            alert('Por favor, insira um telefone válido no formato (99) 99999-9999.');
+            return;
+          }
+
+          document.getElementById('lead-form').classList.add('hidden');
+          document.getElementById('product-page').classList.remove('hidden');
+          document.getElementById('user-name').textContent = name;
+        });
+
+        function validateEmail(email) {
+          let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return re.test(email);
+        }
+
+        function validatePhone(phone) {
+          let re = /^\(\d{2}\) \d{5}-\d{4}$/;
+          return re.test(phone);
+        }
+      </script>
+
+      <!-- Hero Section -->
+      <div class="carousel">
+        <button id="prevBtn" class="nav-btn">&lt;</button>
+        <img id="main-image" src="assets/produtos.png" alt="produto">
+        <button id="nextBtn" class="nav-btn">&gt;</button>
+        <div class="thumbnails">
+          <img class="thumb" src="assets/produtos.png" alt="produto">
+          <img class="thumb" src="assets/maquiagem.png" alt="maquiagem">
+        </div>
+      </div>
+
+      <script>
+        const mainImage = document.getElementById('main-image');
+        const thumbnails = document.querySelectorAll('.thumb');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let currentIndex = 0;
+        const thumbnailImages = Array.from(thumbnails).map(thumb => thumb.src);
+
+        function updateImage(index) {
+          mainImage.style.opacity = '0';
+          setTimeout(() => {
+            mainImage.src = thumbnailImages[index];
+            mainImage.style.opacity = '1';
+          }, 200);
+        }
+
+        // Navegação pelas setas
+        prevBtn.addEventListener('click', () => {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+          updateImage(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+          currentIndex = (currentIndex + 1) % images.length;
+          updateImage(currentIndex);
+        });
+
+        // Seleção por thumbnails
+        thumbnails.forEach((thumb, index) => {
+          thumb.addEventListener('click', () => {
+            currentIndex = index;
+            updateImage(currentIndex);
+          });
+        });
+
+      </script>
+
+      <!-- About Section -->
+      <section id="about">
+        <h2>Sobre o Produto</h2>
+        <div class="about-content">
+          <img src="assets/cosmeticos.png" alt="Imagem do Produto">
+          <div class="about-text">
+            <p>Nosso produto é desenvolvido com alta qualidade, proporcionando durabilidade e desempenho excepcionais.
+              Ideal para quem busca eficiência e inovação no dia a dia.</p>
+            <ul>
+              <li>✔️ Feito com materiais sustentáveis</li>
+              <li>✔️ Design moderno e funcional</li>
+              <li>✔️ Garantia de 2 anos</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Gallery Section -->
+      <section id="gallery">
+        <h2 style="font-weight: bold;">Galeria de Imagens</h2>
+        <div class="gallery">
+          <img src="assets/produtos.png" onclick="openModal(0)" alt="produto">
+          <img src="assets/maquiagem.png" onclick="openModal(1)" alt="maquiagem">
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div style="width: 500px; display: flex; justify-content: space-between;">
+          <button id="prevModalBtn" onclick="prevModalImage(event)">&#10094;</button>
+          <img id="modal-image" style="max-width: 50%; height: auto; display: block;">
+          <button id="nextModalBtn" onclick="nextModalImage(event)">&#10095;</button>
+        </div>
+      </div>
+
+      <script>
+        const images = ["assets/produtos.png", "assets/maquiagem.png"];
+        let currentImageIndex = 0;
+
+        function openModal(index) {
+          currentImageIndex = index;
+          document.getElementById("modal-image").src = images[currentImageIndex];
+          document.getElementById("modal").style.display = "flex";
+        }
+
+        function closeModal() {
+          document.getElementById("modal").style.display = "none";
+        }
+
+        function prevModalImage(event) {
+          event.stopPropagation();
+          currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+          updateModalImage();
+        }
+
+        function nextModalImage(event) {
+          event.stopPropagation();
+          currentImageIndex = (currentImageIndex + 1) % images.length;
+          updateModalImage();
+        }
+
+        function updateModalImage() {
+          let modalImage = document.getElementById("modal-image");
+          modalImage.style.opacity = "0";
+          setTimeout(() => {
+            modalImage.src = images[currentImageIndex];
+            modalImage.style.opacity = "1";
+          }, 200);
+        }
+      </script>
+
+
+
+      <!-- Testimonials Section -->
+      <section id="testimonials">
+        <h2 style="display: flex; justify-content: center;">Depoimentos</h2>
+        <div class="testimonials-container">
+          <div class="testimonials-slider">
+            <div class="testimonial">"Ótimo produto!" - João</div>
+            <div class="testimonial">"Muito satisfeito!" - Maria</div>
+            <div class="testimonial">"Excelente!" - Roberto</div>
+          </div>
+          <div class="pagination"></div>
+          <button id="prevTestimonial" class="nav-btn">&#10094;</button>
+          <button id="nextTestimonial" class="nav-btn">&#10095;</button>
+        </div>
+      </section>
+
+      <script>
+        const slider = document.querySelector('.testimonials-slider');
+        const testimonials = document.querySelectorAll('.testimonial');
+        const prevTestimonialBtn = document.getElementById('prevTestimonial');
+        const nextTestimonialBtn = document.getElementById('nextTestimonial');
+        const pagination = document.querySelector('.pagination');
+        let index = 0;
+
+        function updateSlider() {
+          slider.style.transform = `translateX(-${index * 100}%)`;
+          document.querySelectorAll('.pagination span').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        }
+
+        function createPagination() {
+          testimonials.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.addEventListener('click', () => {
+              index = i;
+              updateSlider();
+            });
+            pagination.appendChild(dot);
+          });
+          updateSlider();
+        }
+
+        prevTestimonialBtn.addEventListener('click', () => {
+          index = (index - 1) % testimonials.length;
+          updateSlider();
+        });
+
+        nextTestimonialBtn.addEventListener('click', () => {
+          index = (index + 1) % testimonials.length;
+          updateSlider();
+        });
+
+        // Slider manual (toque)
+        let startX;
+        slider.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+        slider.addEventListener('touchend', (e) => {
+          let endX = e.changedTouches[0].clientX;
+          if (startX > endX + 50) nextBtn.click();
+          if (startX < endX - 50) prevBtn.click();
+        });
+        createPagination();
+
+      </script>
+
+      <!-- Timer Countdown (Último CTA) -->
+      <section id="countdown">
+        <h2 style="display: flex; justify-content: center;">Promoção termina em: <span id="timer"></span></h2>
+      </section>
+
+      <script>
+        let countdown = 500;
+        document.getElementById('timer').textContent = Math.floor(countdown / 60) + 'm ' + (countdown % 60) + 's';
+        setInterval(() => {
+          countdown--;
+          document.getElementById('timer').textContent = Math.floor(countdown / 60) + 'm ' + (countdown % 60) + 's';
+        }, 1000);
+
+        window.addEventListener('scroll', function () {
+          let header = document.getElementById('header');
+          if (window.scrollY > 50) {
+            header.classList.add('shrink');
+          } else {
+            header.classList.remove('shrink');
+          }
+        });
+      </script>
+    </section>
+  </main>
+
+  <div id="modal">
+    <button onclick="closeModal()">&#10006;</button>
+    <div class="modal-controls">
+      <button onclick="prevModalImage()">&#10094;</button>
+      <button onclick="nextModalImage()">&#10095;</button>
+    </div>
+    <img id="modal-image" src="">
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Produto X. Todos os direitos reservados.</p>
+    <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+  </footer>
+</body>
+
+</html>
