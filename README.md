@@ -48,5 +48,9 @@ git push origin main
 ```
 Depois, ative o GitHub Pages nas configurações do repositório.
 
+## Resultado
+![image](https://github.com/user-attachments/assets/f8aa92ed-0f6a-4e5a-80f2-e889c8a26e73)
+
+
 
 Desenvolvido por [Amanda Luiza](https://github.com/AmandaDev25) 🚀
